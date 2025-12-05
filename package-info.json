@@ -1,0 +1,527 @@
+{
+  "metadata": {
+    "total_packages": 64,
+    "description": "GitButler Rust packages overview",
+    "architecture_notes": "The codebase shows an ongoing transition from legacy `gitbutler-*` crates to newer `but-*` crates. Many packages include \"legacy\" feature flags to maintain backward compatibility during this migration. The newer crates use `gix` (gitoxide - a pure Rust Git implementation) while legacy code uses `git2` (libgit2 bindings), with `but-oxidize` providing conversion utilities between the two approaches."
+  },
+  "categories": [
+    {
+      "name": "Core Infrastructure",
+      "order": 1
+    },
+    {
+      "name": "Database & Storage",
+      "order": 2
+    },
+    {
+      "name": "Settings & Configuration",
+      "order": 3
+    },
+    {
+      "name": "Filesystem & I/O",
+      "order": 4
+    },
+    {
+      "name": "Graph & Visualization",
+      "order": 5
+    },
+    {
+      "name": "Hunk Management",
+      "order": 6
+    },
+    {
+      "name": "Workspace & Branch Operations",
+      "order": 7
+    },
+    {
+      "name": "Rebase & Cherry-Pick",
+      "order": 8
+    },
+    {
+      "name": "Metadata & Context",
+      "order": 9
+    },
+    {
+      "name": "Operations Log",
+      "order": 10
+    },
+    {
+      "name": "AI Integration",
+      "order": 11
+    },
+    {
+      "name": "Rules & Automation",
+      "order": 12
+    },
+    {
+      "name": "Forge Integration",
+      "order": 13
+    },
+    {
+      "name": "API & Server",
+      "order": 14
+    },
+    {
+      "name": "CLI Tools",
+      "order": 15
+    },
+    {
+      "name": "Testing & Debugging",
+      "order": 16
+    },
+    {
+      "name": "Legacy GitButler Crates",
+      "order": 17
+    }
+  ],
+  "packages": [
+    {
+      "name": "but-core",
+      "path": "crates/but-core",
+      "category": "Core Infrastructure",
+      "summary": "Core algorithms and types for Git operations",
+      "description": "A fundamental leaf-crate containing core algorithms and types for Git operations. This package serves as a building block for the entire GitButler ecosystem, providing essential data structures and algorithms without external dependencies. It includes features for testing and TypeScript export, making it suitable for both backend and frontend integration."
+    },
+    {
+      "name": "but-error",
+      "path": "crates/but-error",
+      "category": "Core Infrastructure",
+      "summary": "Error handling utilities",
+      "description": "A minimal error handling utilities crate that provides common error types and handling patterns. With only anyhow as a dependency, it keeps error handling lightweight while maintaining consistency across the codebase."
+    },
+    {
+      "name": "but-oxidize",
+      "path": "crates/but-oxidize",
+      "category": "Core Infrastructure",
+      "summary": "Bridge between git2 (libgit2) and gix (gitoxide)",
+      "description": "Provides conversion utilities between git2 (libgit2 bindings) and gix (gitoxide) libraries. This crate is crucial for the ongoing migration from the legacy git2 implementation to the modern Rust-native gitoxide library, allowing both systems to coexist during the transition."
+    },
+    {
+      "name": "but-serde",
+      "path": "crates/but-serde",
+      "category": "Core Infrastructure",
+      "summary": "Serialization utilities for Git types",
+      "description": "Serialization and deserialization utilities specifically designed for Git types. It handles the conversion of Git objects to and from various formats, with support for legacy git2 features to maintain backward compatibility."
+    },
+    {
+      "name": "but-db",
+      "path": "crates/but-db",
+      "category": "Database & Storage",
+      "summary": "SQLite database layer with Diesel ORM",
+      "description": "A SQLite database layer built on top of the Diesel ORM. This crate manages all persistent storage needs, including migrations support. It bundles libsqlite3 on Windows to ensure consistent behavior across platforms."
+    },
+    {
+      "name": "but-forge-storage",
+      "path": "crates/but-forge-storage",
+      "category": "Database & Storage",
+      "summary": "Persistent storage for forge information",
+      "description": "Manages persistent storage for forge information (GitHub, GitLab, etc.). This crate stores and retrieves metadata about connected forges, including authentication tokens, API endpoints, and repository mappings."
+    },
+    {
+      "name": "but-secret",
+      "path": "crates/but-secret",
+      "category": "Database & Storage",
+      "summary": "Secrets management using keyring",
+      "description": "Handles secure storage and retrieval of sensitive information using the system keyring. This crate ensures that credentials and secrets are stored securely using platform-native secure storage mechanisms."
+    },
+    {
+      "name": "but-settings",
+      "path": "crates/but-settings",
+      "category": "Settings & Configuration",
+      "summary": "Application settings management with file watching",
+      "description": "Manages application settings and configuration with built-in file watching support using the notify library. It handles JSON configuration files with lenient parsing to accommodate user modifications and provides reactive updates when settings files change."
+    },
+    {
+      "name": "but-path",
+      "path": "crates/but-path",
+      "category": "Settings & Configuration",
+      "summary": "Path handling utilities",
+      "description": "Provides path handling utilities and platform-specific path operations. It includes functionality for opening paths in default system applications and normalizing path representations across different operating systems."
+    },
+    {
+      "name": "but-fs",
+      "path": "crates/but-fs",
+      "category": "Filesystem & I/O",
+      "summary": "Filesystem operations with TOML support",
+      "description": "Handles filesystem operations with TOML support. This crate provides abstractions over common file operations and includes a legacy feature flag for backward compatibility with older code."
+    },
+    {
+      "name": "but-status",
+      "path": "crates/but-status",
+      "category": "Filesystem & I/O",
+      "summary": "Git status operations using gitoxide",
+      "description": "Implements Git status operations using the modern gitoxide library. It efficiently determines the working directory state, tracking changes, untracked files, and staging area contents."
+    },
+    {
+      "name": "but-graph",
+      "path": "crates/but-graph",
+      "category": "Graph & Visualization",
+      "summary": "Git commit graphs as connected segments with graph operations",
+      "description": "Represents Git commit graphs as connected segments and provides various graph operations. Using the petgraph library for graph data structures, it supports revision walking, ancestry queries, and topology analysis. This is essential for visualizing branch relationships and commit history."
+    },
+    {
+      "name": "but-feedback",
+      "path": "crates/but-feedback",
+      "category": "Graph & Visualization",
+      "summary": "Feedback collection system with diagnostic bundling",
+      "description": "Implements a feedback collection system that bundles diagnostic information. It uses zip compression to create comprehensive feedback bundles that include logs, configurations, and error reports for debugging purposes."
+    },
+    {
+      "name": "but-hunk-dependency",
+      "path": "crates/but-hunk-dependency",
+      "category": "Hunk Management",
+      "summary": "Analyzes dependencies between code hunks",
+      "description": "Analyzes dependencies between code hunks to determine which changes depend on others. Supporting both git2 and gix backends, it's crucial for intelligent merging and conflict detection. It helps determine if hunks can be applied independently or require specific ordering."
+    },
+    {
+      "name": "but-hunk-assignment",
+      "path": "crates/but-hunk-assignment",
+      "category": "Hunk Management",
+      "summary": "Assigns hunks to branches and stacks",
+      "description": "Assigns code hunks to specific branches or stacks based on various criteria. Integrated with the database layer, it maintains persistent mappings between hunks and their target branches."
+    },
+    {
+      "name": "but-workspace",
+      "path": "crates/but-workspace",
+      "category": "Workspace & Branch Operations",
+      "summary": "Core workspace management",
+      "description": "Core workspace management functionality that serves as the foundation for GitButler's virtual branch system. It supports legacy features through feature flags and includes SPMC (Single Producer, Multiple Consumer) channels for communication. The export-ts feature enables TypeScript type generation."
+    },
+    {
+      "name": "but-worktrees",
+      "path": "crates/but-worktrees",
+      "category": "Workspace & Branch Operations",
+      "summary": "Git worktree management operations",
+      "description": "Manages Git worktree operations, allowing multiple working directories for a single repository. This enables parallel work on different branches without constant switching overhead."
+    },
+    {
+      "name": "but-rebase",
+      "path": "crates/but-rebase",
+      "category": "Rebase & Cherry-Pick",
+      "summary": "Git rebase operations with Gerrit support",
+      "description": "Implements Git rebase operations with Gerrit support. Using gix for merge operations, it provides both interactive and non-interactive rebasing capabilities with support for Gerrit's Change-Id workflow."
+    },
+    {
+      "name": "but-cherry-apply",
+      "path": "crates/but-cherry-apply",
+      "category": "Rebase & Cherry-Pick",
+      "summary": "Cherry-pick application logic",
+      "description": "Contains the logic for applying commits through cherry-picking. This crate handles the complexities of applying changes from one branch to another, including conflict detection and resolution."
+    },
+    {
+      "name": "but-meta",
+      "path": "crates/but-meta",
+      "category": "Metadata & Context",
+      "summary": "Metadata operations for Git entities",
+      "description": "Provides metadata operations for Git entities by implementing traits from but-core. With a legacy feature that includes extensive dependencies, it serves as a bridge between modern and legacy code paths while providing rich metadata about commits, branches, and other Git objects."
+    },
+    {
+      "name": "but-ctx",
+      "path": "crates/but-ctx",
+      "category": "Metadata & Context",
+      "summary": "Repository-specific context management",
+      "description": "Implements repository-specific context management. This crate maintains the operational context for working with a specific repository, including configuration, state, and cached metadata. It supports integration with legacy project structures."
+    },
+    {
+      "name": "but-oplog",
+      "path": "crates/but-oplog",
+      "category": "Operations Log",
+      "summary": "Undo/redo functionality through operation logging",
+      "description": "Implements an undo queue through restore-points, providing comprehensive undo/redo functionality. This operation log tracks all changes made to the workspace, allowing users to revert to previous states. A legacy wrapper maintains compatibility with older code."
+    },
+    {
+      "name": "but-action",
+      "path": "crates/but-action",
+      "category": "AI Integration",
+      "summary": "AI-powered actions system with LLM integration",
+      "description": "An AI-powered actions system using async-openai for LLM integration. This crate enables AI-driven operations on the codebase, with a builtin-but feature for embedding functionality directly into the CLI."
+    },
+    {
+      "name": "but-claude",
+      "path": "crates/but-claude",
+      "category": "AI Integration",
+      "summary": "Claude AI integration with MCP support",
+      "description": "Integrates Claude AI with MCP (Model Context Protocol) support. This crate provides access to Claude's capabilities within GitButler, including desktop notifications for AI-generated suggestions and operations."
+    },
+    {
+      "name": "but-cursor",
+      "path": "crates/but-cursor",
+      "category": "AI Integration",
+      "summary": "Cursor editor integration",
+      "description": "Provides integration with the Cursor editor. Using MD5 for session management, it enables bidirectional communication between GitButler and Cursor for enhanced editing experiences."
+    },
+    {
+      "name": "but-bot",
+      "path": "crates/but-bot",
+      "category": "AI Integration",
+      "summary": "Bot functionality for automated operations",
+      "description": "Implements bot functionality for automated operations. This crate enables programmatic interactions with repositories through scripted or AI-driven workflows."
+    },
+    {
+      "name": "but-tools",
+      "path": "crates/but-tools",
+      "category": "AI Integration",
+      "summary": "Collection of AI-powered tools",
+      "description": "A collection of AI-powered tools that integrate with OpenAI and the operation log. These tools provide intelligent assistance for common Git operations and code management tasks."
+    },
+    {
+      "name": "but-rules",
+      "path": "crates/but-rules",
+      "category": "Rules & Automation",
+      "summary": "Rule-based automation system with regex support",
+      "description": "A rule-based automation system with regex support. Using serde_regex for pattern serialization, it allows users to define custom rules that automatically trigger actions based on repository events or file changes."
+    },
+    {
+      "name": "but-forge",
+      "path": "crates/but-forge",
+      "category": "Forge Integration",
+      "summary": "Generic forge abstraction layer",
+      "description": "Provides a generic abstraction layer for interacting with different forges (GitHub, GitLab, Gerrit, etc.). This crate defines common interfaces that specific forge implementations can implement, enabling forge-agnostic code."
+    },
+    {
+      "name": "but-github",
+      "path": "crates/but-github",
+      "category": "Forge Integration",
+      "summary": "GitHub API integration",
+      "description": "GitHub API integration using the octorust library. This crate provides comprehensive GitHub functionality including repository management, pull requests, issues, and authentication. It includes legacy user support for backward compatibility."
+    },
+    {
+      "name": "but-gerrit",
+      "path": "crates/but-gerrit",
+      "category": "Forge Integration",
+      "summary": "Gerrit code review platform integration",
+      "description": "Integrates with the Gerrit code review platform. Using SHA-1 hashing for change tracking, it implements Gerrit's specific workflows including Change-Ids and review workflows."
+    },
+    {
+      "name": "but-api",
+      "path": "crates/but-api",
+      "category": "API & Server",
+      "summary": "Main API layer with modular functionality",
+      "description": "The main API layer with multiple features including Tauri, path-bytes, and legacy support. With extensive optional dependencies, it provides modular functionality that can be selectively enabled based on deployment needs."
+    },
+    {
+      "name": "but-api-macros",
+      "path": "crates/but-api-macros",
+      "category": "API & Server",
+      "summary": "Procedural macros for API code generation",
+      "description": "Procedural macros for API code generation. Using convert_case for naming conventions, it automatically generates boilerplate API code, reducing manual coding and ensuring consistency."
+    },
+    {
+      "name": "but-server",
+      "path": "crates/but-server",
+      "category": "API & Server",
+      "summary": "HTTP server with WebSocket support",
+      "description": "An HTTP server built with Axum, featuring WebSocket support for real-time communication. It includes CORS support for web clients and integrates both feedback collection and Claude AI functionality."
+    },
+    {
+      "name": "but",
+      "path": "crates/but",
+      "category": "CLI Tools",
+      "summary": "Main CLI binary with rich TUI support",
+      "description": "The main CLI binary featuring a rich terminal UI built with ratatui and crossterm. It includes a pager (minus) for viewing large outputs, telemetry via PostHog, and extensive legacy feature support to maintain compatibility with older workflows."
+    },
+    {
+      "name": "but-clap",
+      "path": "crates/but-clap",
+      "category": "CLI Tools",
+      "summary": "Alternative CLI interface using Clap",
+      "description": "An alternative CLI interface using the Clap argument parser. This provides a more traditional command-line argument parsing approach compared to the main but binary's interactive TUI."
+    },
+    {
+      "name": "gitbutler-cli",
+      "path": "crates/gitbutler-cli",
+      "category": "CLI Tools",
+      "summary": "Legacy CLI tool",
+      "description": "The legacy CLI tool with testing features. Using gix with max-performance and tracing enabled, it represents the earlier command-line interface before the transition to the newer but binary."
+    },
+    {
+      "name": "but-testsupport",
+      "path": "crates/but-testsupport",
+      "category": "Testing & Debugging",
+      "summary": "Testing utilities with snapshot testing",
+      "description": "Testing utilities with optional snapbox support for snapshot testing. The termtree feature enables visualization of test results in tree format, making it easier to understand complex test scenarios."
+    },
+    {
+      "name": "but-testing",
+      "path": "crates/but-testing",
+      "category": "Testing & Debugging",
+      "summary": "Binary for testing scenarios",
+      "description": "A binary specifically designed for testing scenarios. It includes features for generating stable commits, ensuring reproducible tests regardless of system time or user configuration."
+    },
+    {
+      "name": "but-debugging",
+      "path": "crates/but-debugging",
+      "category": "Testing & Debugging",
+      "summary": "Debugging utilities",
+      "description": "Minimal debugging utilities for development and troubleshooting. As a lightweight crate with no dependencies, it provides basic debugging helpers."
+    },
+    {
+      "name": "gitbutler-testsupport",
+      "path": "crates/gitbutler-testsupport",
+      "category": "Testing & Debugging",
+      "summary": "Legacy test support",
+      "description": "Legacy test support with project setup utilities. Including keyring and gix-testtools, it provides comprehensive testing infrastructure for the older gitbutler-* crates."
+    },
+    {
+      "name": "gitbutler-tauri",
+      "path": "crates/gitbutler-tauri",
+      "category": "Legacy GitButler Crates",
+      "summary": "Main Tauri desktop application",
+      "description": "The main Tauri desktop application with an extensive plugin ecosystem. It includes updater, file system access, HTTP client, and other Tauri plugins. macOS-specific features include traffic lights positioner for window chrome. The builtin-but feature embeds the new CLI, while devtools enables development tools."
+    },
+    {
+      "name": "gitbutler-watcher",
+      "path": "crates/gitbutler-watcher",
+      "category": "Legacy GitButler Crates",
+      "summary": "File monitoring and change detection",
+      "description": "File monitoring and change detection using gitbutler-filemonitor. This crate watches the repository for changes and triggers rule evaluation and workspace updates automatically."
+    },
+    {
+      "name": "gitbutler-filemonitor",
+      "path": "crates/gitbutler-filemonitor",
+      "category": "Legacy GitButler Crates",
+      "summary": "Low-level file monitoring with debouncing",
+      "description": "Low-level file monitoring with debouncing using the notify library. It implements a backoff strategy to avoid excessive notifications during rapid file changes and enforces strict clippy lints for code quality."
+    },
+    {
+      "name": "gitbutler-workspace",
+      "path": "crates/gitbutler-workspace",
+      "category": "Legacy GitButler Crates",
+      "summary": "Legacy workspace operations",
+      "description": "Legacy workspace operations focused on stack and repository management. This represents the older implementation before the transition to but-workspace."
+    },
+    {
+      "name": "gitbutler-stack",
+      "path": "crates/gitbutler-stack",
+      "category": "Legacy GitButler Crates",
+      "summary": "Stack (branch series) management",
+      "description": "Manages stacks (series of related branches) with TOML persistence. Stacks allow grouping related branches and managing them as a unit, with configuration stored in TOML files."
+    },
+    {
+      "name": "gitbutler-branch",
+      "path": "crates/gitbutler-branch",
+      "category": "Legacy GitButler Crates",
+      "summary": "Branch operations and management",
+      "description": "Branch operations and management using lazy_static for shared state. This crate provides the foundation for GitButler's virtual branch system in the legacy codebase."
+    },
+    {
+      "name": "gitbutler-branch-actions",
+      "path": "crates/gitbutler-branch-actions",
+      "category": "Legacy GitButler Crates",
+      "summary": "High-level branch operations",
+      "description": "High-level branch operations including create, update, delete, and other actions. Integrated with oplog, all branch operations are tracked for undo/redo functionality."
+    },
+    {
+      "name": "gitbutler-repo",
+      "path": "crates/gitbutler-repo",
+      "category": "Legacy GitButler Crates",
+      "summary": "Repository operations",
+      "description": "Comprehensive repository operations including status, rebase, Gerrit support, fuzzy matching, and file ignore patterns. This is one of the core legacy crates handling direct Git repository interactions."
+    },
+    {
+      "name": "gitbutler-repo-actions",
+      "path": "crates/gitbutler-repo-actions",
+      "category": "Legacy GitButler Crates",
+      "summary": "High-level repository actions",
+      "description": "High-level repository actions with async tokio support. This crate provides asynchronous versions of common repository operations for better performance in the desktop application."
+    },
+    {
+      "name": "gitbutler-project",
+      "path": "crates/gitbutler-project",
+      "category": "Legacy GitButler Crates",
+      "summary": "Project management and configuration",
+      "description": "Project management and configuration, including forge integration. Using reqwest for HTTP transport, it manages project-level settings and remote connections."
+    },
+    {
+      "name": "gitbutler-operating-modes",
+      "path": "crates/gitbutler-operating-modes",
+      "category": "Legacy GitButler Crates",
+      "summary": "Different operating modes for the application",
+      "description": "Defines different operating modes for the application (edit mode, workspace mode, etc.). This allows GitButler to switch between different operational paradigms based on user needs."
+    },
+    {
+      "name": "gitbutler-edit-mode",
+      "path": "crates/gitbutler-edit-mode",
+      "category": "Legacy GitButler Crates",
+      "summary": "Edit mode functionality",
+      "description": "Implements edit mode functionality for direct Git operations. In edit mode, GitButler acts more like a traditional Git client, allowing direct manipulation of branches and commits."
+    },
+    {
+      "name": "gitbutler-oplog",
+      "path": "crates/gitbutler-oplog",
+      "category": "Legacy GitButler Crates",
+      "summary": "Legacy oplog implementation",
+      "description": "Legacy oplog implementation with branch and stack support. This predates but-oplog and maintains compatibility with the older workspace system."
+    },
+    {
+      "name": "gitbutler-sync",
+      "path": "crates/gitbutler-sync",
+      "category": "Legacy GitButler Crates",
+      "summary": "Synchronization operations for remote repositories",
+      "description": "Synchronization operations for remote repositories. This crate handles fetching, pulling, and pushing operations with remote repositories."
+    },
+    {
+      "name": "gitbutler-git",
+      "path": "crates/gitbutler-git",
+      "category": "Legacy GitButler Crates",
+      "summary": "Git operations wrapper with platform-specific features",
+      "description": "Git operations wrapper with askpass and setsid binaries. It includes platform-specific features for Unix and Windows, with a test-askpass-path feature for testing credential workflows. Strict clippy lints ensure code quality."
+    },
+    {
+      "name": "gitbutler-commit",
+      "path": "crates/gitbutler-commit",
+      "category": "Legacy GitButler Crates",
+      "summary": "Commit operations",
+      "description": "Commit operations with support for stable commit generation during testing. This ensures reproducible commits in tests by controlling timestamps and other variable data."
+    },
+    {
+      "name": "gitbutler-cherry-pick",
+      "path": "crates/gitbutler-cherry-pick",
+      "category": "Legacy GitButler Crates",
+      "summary": "Cherry-pick operations",
+      "description": "Cherry-pick operations using both git2 and gix libraries. This dual support allows gradual migration to gitoxide while maintaining compatibility with existing git2-based code."
+    },
+    {
+      "name": "gitbutler-diff",
+      "path": "crates/gitbutler-diff",
+      "category": "Legacy GitButler Crates",
+      "summary": "Diff operations and hunk management",
+      "description": "Diff operations and hunk management using the diffy library. MD5 hashing generates change IDs for tracking specific modifications across operations."
+    },
+    {
+      "name": "gitbutler-hunk-dependency",
+      "path": "crates/gitbutler-hunk-dependency",
+      "category": "Legacy GitButler Crates",
+      "summary": "Legacy hunk dependency analysis",
+      "description": "Legacy hunk dependency analysis that wraps but-hunk-dependency. This maintains the older API while delegating to the newer implementation."
+    },
+    {
+      "name": "gitbutler-reference",
+      "path": "crates/gitbutler-reference",
+      "category": "Legacy GitButler Crates",
+      "summary": "Git reference management",
+      "description": "Git reference management using both git2 and gix. This crate handles branches, tags, and other Git references, supporting both implementation backends."
+    },
+    {
+      "name": "gitbutler-url",
+      "path": "crates/gitbutler-url",
+      "category": "Legacy GitButler Crates",
+      "summary": "URL parsing and validation for Git remotes",
+      "description": "URL parsing and validation specifically for Git remotes. It handles various Git URL formats (HTTPS, SSH, git://) and validates remote configurations."
+    },
+    {
+      "name": "gitbutler-user",
+      "path": "crates/gitbutler-user",
+      "category": "Legacy GitButler Crates",
+      "summary": "User management and authentication",
+      "description": "User management and authentication using keyring for credential storage. This crate manages user profiles, authentication tokens, and identity information."
+    },
+    {
+      "name": "gitbutler-time",
+      "path": "crates/gitbutler-time",
+      "category": "Legacy GitButler Crates",
+      "summary": "Time utilities",
+      "description": "A minimal time utilities crate with no dependencies. It provides simple time-related helpers needed across the legacy codebase."
+    }
+  ]
+}
